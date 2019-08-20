@@ -21,6 +21,7 @@ $(document).ready(function() {
   $("#search_button").click(
     function() {
 
+
       //salvo l'input utente in una variabile
       var inputUser = $(".input_user").val().toUpperCase();
       console.log(inputUser);
@@ -40,30 +41,35 @@ $(document).ready(function() {
           },
           method : "GET",
           success : function(data) {
-            // if (data.success) { //se inserisco questo controllo non funziona più
-              var movie = data.results;
-              console.log(movie);
+            var movie = data.results;
+            console.log(movie);
 
-              //ciclo per traversare l'array ottenuto dall'API
-              for (var i = 0; i < movie.length; i++) {
-                var eachMovie = movie[i];
-                console.log("eachmovie " , eachMovie);
 
-                //assegno i segnaposto
-                var context =
-                {
-                  title: movie[i].title,
-                  original_title: movie[i].original_title,
-                  original_language: movie[i].original_language,
-                  vote_average: movie[i].vote_average
-                };
+            //ciclo per traversare l'array ottenuto dall'API
+            for (var i = 0; i < movie.length; i++) {
+              var eachMovie = movie[i];
+              console.log("eachmovie " , eachMovie);
 
-                var html = template(context);
+              //trasformo il voto da 1a10 decimale a 1a5 intero e arrotondo per eccesso
+              var vote1to5 = Math.round(eachMovie.vote_average / 2);
 
-                //stampo a schermo
-                $(".container_movie").append(html);
-              }
-            // }
+              //assegno i segnaposto
+              var context =
+              {
+                // poster_path: "https://image.tmdb.org/t/p/w342" + eachMovie.poster_path,
+                title: eachMovie.title,
+                original_title: eachMovie.original_title,
+                original_language: eachMovie.original_language,
+                vote_average: vote1to5
+              };
+
+              var html = template(context);
+
+              //stampo a schermo
+              $(".container_movie").append(html);
+            }
+
+            ratingStar();
           },
           error : function(richiesta, stato, errore) {
             alert("E' avvenuto un errore. " + errore);
@@ -71,5 +77,28 @@ $(document).ready(function() {
         }
       );
     }
-  );
+  ); //fine metodo click
+
+
+  //funzione per creare la votazione con le stelle
+  function ratingStar() {
+    $(".rate_star").each(
+      function() {
+
+        var num = $(this).attr("data-numero");
+        var diff = 5 - num;
+        //stelle piene
+        for (var i = 0; i < num; i++) {
+          $(this).append("<i class='fas fa-star'></i>").addClass("yellow");
+        }
+        //stelle vuote
+        for (var i = 0; i < diff; i++) {
+          $(this).append("<i class='far fa-star'></i>");
+        }
+      }
+    )
+  }
+
+
+
 });
