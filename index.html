@@ -18,7 +18,7 @@
 
     </div>
 
-
+    <span class="flag_lang"></span>
 
     <!-- template handlebars -->
     <script id="template" type="text/x-handlebars-template">
@@ -26,8 +26,10 @@
         <img src="{{poster_path}}" alt="">
         <h2>Titolo: {{title}}</h2>
         <h3>Titolo originale: {{original_title}}</h3>
-        <h3>Lingua originale: {{original_language}}</h3>
-        <p class="rate_star" data-numero='{{vote_average}}'></p>
+        <h3>Lingua originale: <span class="flag_lang" data-flag="{{original_language}}"></span></h3>
+        <h3>Voto: <span class="rate_star" data-vote="{{vote_average}}"></span></h3>
+        <p>Overview: {{overview}}</p>
+
       </div>
     </script>
 
