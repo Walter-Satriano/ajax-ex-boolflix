@@ -11,29 +11,42 @@
   </head>
   <body>
 
-    <input class="input_user" type="text" name="" value="" placeholder="cerca il tuo film">
-    <button id="search_button" type="button" name="button">CERCA</button>
+    <div class="container">
+      <header>
+        <nav>
+          <div class="logo">
+            <h1>boolflix</h1>
+          </div>
+          <div class="search_bar">
+            <input class="input_user" type="text" name="" value="" placeholder="cerca il tuo film">
+            <button id="search_button" type="button" name="button">CERCA</button>
+          </div>
+        </nav>
+      </header>
 
-    <div class="container_movie">
+
+      <!-- container per i film -->
+      <div class="container_movie">
+
+      </div>
 
     </div>
 
-    <span class="flag_lang"></span>
 
-    <!-- template handlebars -->
-    <script id="template" type="text/x-handlebars-template">
-      <div class="movie_list">
+    <!-- template handlebars per i film -->
+    <script id="template_movie" type="text/x-handlebars-template">
+      <div class="movie_poster">
         <img src="{{poster_path}}" alt="">
-        <h2>Titolo: {{title}}</h2>
-        <h3>Titolo originale: {{original_title}}</h3>
-        <h3>Lingua originale: <span class="flag_lang" data-flag="{{original_language}}"></span></h3>
-        <h3>Voto: <span class="rate_star" data-vote="{{vote_average}}"></span></h3>
-        <p>Overview: {{overview}}</p>
-
+      </div>
+      <div class="movie_list">
+        <h3>Tipo: <span>{{type}}</span></h3>
+        <h2>Titolo: <span class="title">{{title}}</span></h2>
+        <h3>Titolo originale: <span class="original_title">{{original_title}}</span></h3>
+        <h3>Lingua originale: <span class="flag_lang">{{{original_language}}}</span></h3>
+        <h3>Voto: <span class="rate_star">{{{vote_average}}}</span></h3>
+        <h3>Overview: <span class="overview">{{overview}}</span></h3>
       </div>
     </script>
-
-
 
     <script src="main.js" type="text/javascript"></script>
   </body>
