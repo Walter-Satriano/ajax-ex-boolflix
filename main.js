@@ -20,6 +20,15 @@ $(document).ready(function() {
       callTVseries(inputUser);
   }
 
+  // avvio la ricerca premendo il pulsante "invio" da tastiera
+  $(".input_user").keypress(
+    function(invio) {
+      if (invio.which == 13) {
+        searchClick();
+      }
+    }
+  );
+
   //funzione con chiamata ajax per i film
   function callMovie(inputUser) {
     //chiamata ajax (film) in base all'input dell'utente
@@ -38,7 +47,7 @@ $(document).ready(function() {
           var movie = data.results;
           console.log(movie);
 
-          print("movie", movie);
+          print("Movie", movie);
         },
         error : function(richiesta, stato, errore) {
           alert("E' avvenuto un errore. " + errore);
@@ -64,7 +73,7 @@ $(document).ready(function() {
           var tvSeries = data.results;
           console.log(tvSeries);
 
-          print("tvSeries", tvSeries);
+          print("Tv", tvSeries);
         },
         error : function(richiesta, stato, errore) {
           alert("E' avvenuto un errore. " + errore);
@@ -88,7 +97,7 @@ $(document).ready(function() {
       title = "";
       originalTitle = "";
 
-      if (type == "movie") {
+      if (type == "Movie") {
         title = eachMovie.title;
         originalTitle = eachMovie.original_title;
       } else {
@@ -99,13 +108,13 @@ $(document).ready(function() {
       //assegno i segnaposto
       var context =
       {
-        poster_path: "https://image.tmdb.org/t/p/w342" + eachMovie.poster_path,
+        poster_path: getPosterimg(eachMovie.poster_path),
         type: type,
         title: title,
         original_title: originalTitle,
         original_language: getFlag(eachMovie.original_language),
         vote_average: getStar(eachMovie.vote_average),
-        overview: eachMovie.overview
+        overview: getOverview(eachMovie.overview)
       };
 
       var html = template(context);
@@ -142,10 +151,13 @@ $(document).ready(function() {
       "fr",
       "in",
       "it",
-      "jp",
+      "ja",
       "pt",
       "ru",
-      "usa"
+      "usa",
+      "sv",
+      "da",
+      "no"
     ];
 
     var flag = "";
@@ -156,6 +168,33 @@ $(document).ready(function() {
     }
 
     return flag;
+  }
+
+  //funzione per recuperare i poster (film + serieTV)
+  function getPosterimg(url) {
+
+    var imgTag = "";
+    if (url) {
+      imgTag = "<img src='https://image.tmdb.org/t/p/w342" + url + "' class='poster'/>";
+    }
+    else {
+      imgTag = "<img src='img/imgnotavailable.png'/>";
+    }
+
+    return imgTag;
+  }
+
+  //funzione per recuperare le overview
+  function getOverview(description) {
+
+    var overview = "";
+    if (description) {
+      overview = description;
+    } else {
+      overview = "n/d";
+    }
+
+    return overview;
   }
 
 
